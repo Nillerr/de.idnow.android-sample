@@ -1,7 +1,6 @@
 package de.idnow.sampleproject
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,46 +9,53 @@ import de.idnow.R
 import de.idnow.sdk.IDnowSDK
 
 class MainActivity : Activity() {
-    private var context: Context? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        context = this
 
+        // Environment
+        IDnowSDK.setEnvironment(IDnowSDK.Server.TEST)
+
+        // Video Identification
         val startVideoIdentButton = findViewById<Button>(R.id.buttonStartVideoIdent)
 
         DrawableUtils.setProceedButtonBackgroundSelector(startVideoIdentButton)
+        startVideoIdentButton.setOnClickListener { startVideoIdentification() }
 
-        startVideoIdentButton.setOnClickListener {
-            try {
-                IDnowSDK.getInstance().initialize(this@MainActivity, "")
-                IDnowSDK.setShowVideoOverviewCheck(true, context)
-                IDnowSDK.setShowErrorSuccessScreen(true, context)
-
-                // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
-                IDnowSDK.setTransactionToken("TST-XXXXX", context)
-                IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(context))
-            } catch (e: Exception) {
-                // exception handling required
-                e.printStackTrace()
-            }
-        }
-
+        // Photo Identification
         val startPhotoIdentButton = findViewById<Button>(R.id.buttonStartPhotoIdent)
-        DrawableUtils.setProceedButtonBackgroundSelector(startPhotoIdentButton)
-        startPhotoIdentButton.setOnClickListener {
-            try {
-                IDnowSDK.getInstance().initialize(this@MainActivity, "idnow")
-                IDnowSDK.setShowVideoOverviewCheck(true, context)
-                IDnowSDK.setShowErrorSuccessScreen(true, context)
 
-                // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
-                IDnowSDK.setTransactionToken("TST-XXXXX", context)
-                IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(context))
-            } catch (e: Exception) {
-                // exception handling required
-                e.printStackTrace()
-            }
+        DrawableUtils.setProceedButtonBackgroundSelector(startPhotoIdentButton)
+        startPhotoIdentButton.setOnClickListener { startPhotoIdentification() }
+    }
+
+    private fun startVideoIdentification() {
+        try {
+            IDnowSDK.getInstance().initialize(this, "")
+            IDnowSDK.setShowVideoOverviewCheck(true, this)
+            IDnowSDK.setShowErrorSuccessScreen(true, this)
+
+            // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
+            IDnowSDK.setTransactionToken("TST-KZPDT", this)
+            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(this))
+        } catch (e: Exception) {
+            // exception handling required
+            e.printStackTrace()
+        }
+    }
+
+    private fun startPhotoIdentification() {
+        try {
+            IDnowSDK.getInstance().initialize(this, "idnow")
+            IDnowSDK.setShowVideoOverviewCheck(true, this)
+            IDnowSDK.setShowErrorSuccessScreen(true, this)
+
+            // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
+            IDnowSDK.setTransactionToken("TST-XXXXX", this)
+            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(this))
+        } catch (e: Exception) {
+            // exception handling required
+            e.printStackTrace()
         }
     }
 
