@@ -36,8 +36,8 @@ class MainActivity : Activity() {
             IDnowSDK.setShowErrorSuccessScreen(true, this)
 
             // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
-            IDnowSDK.setTransactionToken("TST-KZPDT", this)
-            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(this))
+            IDnowSDK.setTransactionToken("TST-PNCDZ")
+            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken())
         } catch (e: Exception) {
             // exception handling required
             e.printStackTrace()
@@ -51,8 +51,8 @@ class MainActivity : Activity() {
             IDnowSDK.setShowErrorSuccessScreen(true, this)
 
             // need to be changed to your own token as described in API documentation, see https://www.idnow.eu/development/api-documentation/
-            IDnowSDK.setTransactionToken("TST-XXXXX", this)
-            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken(this))
+            IDnowSDK.setTransactionToken("TST-PNCDZ")
+            IDnowSDK.getInstance().start(IDnowSDK.getTransactionToken())
         } catch (e: Exception) {
             // exception handling required
             e.printStackTrace()
